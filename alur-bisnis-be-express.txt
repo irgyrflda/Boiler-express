@@ -1,0 +1,5 @@
+create models
+create validation (jika ingin menggunakan validasi)
+create controller
+create routes
+selesai
