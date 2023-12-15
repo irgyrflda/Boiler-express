@@ -1,3 +1,5 @@
+//config database menggunakan orm sequelize
+
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
 const DATABASE = process.env.DB_NAME

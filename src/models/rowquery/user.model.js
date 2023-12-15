@@ -1,5 +1,6 @@
+//menggunakan raw query database
 const UserRow = (val) => {
-
+//dengan kondisi
     let query
     switch (val.method) {
         case 'GET_ALL':
@@ -24,4 +25,5 @@ const UserRow = (val) => {
     return query;
 }
 
-module.exports = UserRow;
+module.exports = UserRow; //exports module userraw
+//module ini di import di ./src/models/rowquery/index.js

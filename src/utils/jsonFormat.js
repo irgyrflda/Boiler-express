@@ -1,3 +1,4 @@
+//Handle Respons Json
 exports.jsonFormat = (res, statusCode, status, msg, data = [], meta) => {
   if (status === "success") {
     res.json({

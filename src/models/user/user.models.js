@@ -1,6 +1,6 @@
-const db = require("../../config/database");
+const db = require("../../config/database"); //import connection database
 const { DataTypes } = require("sequelize");
-
+//menggunakan ORM express.js
 const User = db.define(
     "User",
     {
@@ -20,4 +20,5 @@ const User = db.define(
     }
 )
 
-module.exports = User;
+module.exports = User; //exports module user
+//module ini di import di ./src/models/user/index.js

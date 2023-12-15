@@ -1,31 +1,31 @@
-const { jsonFormat } = require("../../utils/jsonFormat");
-const db = require('../../config/database');
+const { jsonFormat } = require("../../utils/jsonFormat"); //import dari folder utils untuk handel response json
+const db = require('../../config/database'); //kalau mengguankan raw query wajib import connection databse
 const {
     UserRow
-} = require("../../models/rowquery/index");
+} = require("../../models/rowquery/index"); //mengambil query yang ada di models dengan nama file ./rowquery/index
 
 const GetAllRow = (req, res) => {
-    const queryGetAll = UserRow({ "method": "GET_ALL" })
+    const queryGetAll = UserRow({ "method": "GET_ALL" }) // using raw query dengan mengirim object method GET_ALL
     db.query(queryGetAll,
         {
             type: db.QueryTypes.SELECT
-        })
-        .then((dataGetAll) => {
-            if (!dataGetAll) {
-                return jsonFormat(res, "failed", "Data Kosong[0]")
+        }) //implementasi raw query in sequelize
+        .then((dataGetAll) => { //callback response data dari dababase
+            if (!dataGetAll) {//validation jika tidak ada calbackan
+                return jsonFormat(res, "failed", "Data Kosong[0]")//lempar respons error ke depan
             }
-            if (dataGetAll.length === 0) {
-                return jsonFormat(res, 400, "failed", "Data Kosong[1]")
+            if (dataGetAll.length === 0) { //validasi jika array data kosong
+                return jsonFormat(res, 400, "failed", "Data Kosong[1]") //lempar error jika data tidak ada
             }
-            return jsonFormat(res, 200, "success", "Berhasil Memuat Data", dataGetAll)
+            return jsonFormat(res, 200, "success", "Berhasil Memuat Data", dataGetAll) //lempar respons jika ada data nya
         })
-        .catch((error) => {
-            return jsonFormat(res, 401, "failed", `Error: ${error}`)
+        .catch((error) => { //callbackan error
+            return jsonFormat(res, 400, "failed", `Error: ${error}`)// lempar error ke depan dengan respons
         })
 }
 
 const GetByIdRow = (req, res) => {
-    const paramsId = req.params.id_user
+    const paramsId = req.params.id_user //defined params yang di lempar
     db.query(UserRow(
         {
             "method": "GET_BY_ID",
@@ -44,7 +44,7 @@ const GetByIdRow = (req, res) => {
             return jsonFormat(res, 200, "success", "Berhasil Memuat Data", dataById)
         })
         .catch((error) => {
-            return jsonFormat(res, 401, "failed", `Error: ${error}`)
+            return jsonFormat(res, 400, "failed", `Error: ${error}`)
         })
 }
 
@@ -159,7 +159,7 @@ const DeleteByIdRow = (req, res) => {
             })
         })
         .catch((error) => {
-            return jsonFormat(res, 401, "failed", `Error: ${error}`)
+            return jsonFormat(res, 400, "failed", `Error: ${error}`)
         })
 }
 
@@ -169,4 +169,4 @@ module.exports = {
     CreateRow,
     UpdateRow,
     DeleteByIdRow
-}
+} // exports module untuk di import di /controller/index.js
