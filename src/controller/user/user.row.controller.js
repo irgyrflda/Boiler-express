@@ -65,7 +65,7 @@ const CreateRow = (req, res) => {
             if (validationUser.length !== 0) {
                 return jsonFormat(res, 400, "failed", "Data Sudah Ada[1]")
             }
-            db.query(UserRow(
+            return db.query(UserRow(
                 {
                     "method": "POST",
                     "nama": nama
@@ -74,12 +74,12 @@ const CreateRow = (req, res) => {
                 {
                     type: db.QueryTypes.INSERT
                 })
-                .then((dataCreate) => {
-                    if (!dataCreate) {
+        })
+        .then((dataCreate) => {
+            if (!dataCreate) {
                         return jsonFormat(res, "failed", "Gagal Membuat Data")
-                    }
-                    return jsonFormat(res, 200, "success", "Berhasil Menambah Data")
-                })
+            }
+            return jsonFormat(res, 200, "success", "Berhasil Menambah Data")
         })
         .catch((error) => {
             return jsonFormat(res, 400, "failed", `Error: ${error}`)
@@ -104,7 +104,7 @@ const UpdateRow = (req, res) => {
             if (validationUser.length === 0) {
                 return jsonFormat(res, 400, "failed", "Data Tidak Ditemukan[1]")
             }
-            db.query(UserRow(
+            return db.query(UserRow(
                 {
                     "method": "PUT",
                     "id": paramsId,
@@ -114,12 +114,13 @@ const UpdateRow = (req, res) => {
                 {
                     type: db.QueryTypes.UPDATE
                 })
-                .then((updateData) => {
-                    if (!updateData) {
-                        return jsonFormat(res, "failed", "Gagal Mengubah Data")
-                    }
-                    return jsonFormat(res, 200, "success", "Berhasil Mengubah Data")
-                })
+                
+        })
+        .then((updateData) => {
+            if (!updateData) {
+                return jsonFormat(res, "failed", "Gagal Mengubah Data")
+            }
+            return jsonFormat(res, 200, "success", "Berhasil Mengubah Data")
         })
         .catch((error) => {
             return jsonFormat(res, 400, "failed", `Error: ${error}`)
@@ -144,19 +145,20 @@ const DeleteByIdRow = (req, res) => {
             if (validationUser.length === 0) {
                 return jsonFormat(res, 400, "failed", "Data Tidak Ditemukan[1]")
             }
-            db.query(UserRow
+            return db.query(UserRow
                 (
                     {
                         "method": "DELETE",
                         "id": paramsId
                     }
                 )
-            ).then((deleteUser) => {
-                if (!deleteUser) {
-                    return jsonFormat(res, "failed", "Gagal Menghapus Data[0]")
-                }
-                return jsonFormat(res, 200, "success", "Berhasil Menghapus Data")
-            })
+            )
+        })
+        .then((deleteUser) => {
+            if (!deleteUser) {
+                return jsonFormat(res, "failed", "Gagal Menghapus Data[0]")
+            }
+            return jsonFormat(res, 200, "success", "Berhasil Menghapus Data")
         })
         .catch((error) => {
             return jsonFormat(res, 400, "failed", `Error: ${error}`)
